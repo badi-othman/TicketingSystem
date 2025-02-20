@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <h4 class="navbar-brand" style="margin-left: 15px">HelpDesk</h4>
+        <div>
+            <form th:action="@{/logout}" method="post" class="form-inline">
+                <button class="btn btn-outline-danger" type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="p-4">
+        <div class="card">
+            <h3 class="card-header">Vos tickéts</h3>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Titre</th> <th>Déscription</th> <th>Produit</th> <th>Sérvice</th> <th>Criticité</th> <th>Consultant en charge</th> <th>Date</th>
+                    </tr>
+                    <tr th:each="p:${tickets}">
+                        <td th:text="${p.title}"></td>
+                        <td th:text="${p.description}"></td>
+                        <td th:text="${p.productType.getDisplayName()}"></td>
+                        <td th:text="${p.serviceType.getDisplayName()}"></td>
+                        <td th:text="${p.criticality.getDisplayName()}"></td>
+                        <td>
+                            <span th:if="${p.consultant != null}" th:text="${p.consultant.name}"></span>
+                            <span th:unless="${p.consultant != null}">Unassigned</span>
+                        </td>
+                        <td th:text="${p.dateCreation}"></td>
+
+                    </tr>
+                    </thead>
+                </table>
+                <br>
+                <a th:href="@{/client/ticket-form}" class="btn btn-primary mb-3">Nouveau tickét</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

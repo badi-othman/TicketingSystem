@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="p-5">
+    <div class="card">
+        <h3 class="card-header">Envoyer une demande</h3>
+        <div class="card-body">
+            <form th:action="@{/client/tickets/save}" method="post" th:object="${ticket}">
+                <div>
+                    <label>Titre de votre demande</label>
+                    <input id="title" name="title" th:field="${ticket.title}" class="form-control" placeholder="Titre">
+                    <small class="form-text text-muted">Veuiller choisir un titre convenable à votre probléme</small>
+                </div>
+                <br>
+                <div>
+                    <label>Déscription de votre probléme</label>
+                    <textarea id="description" name="description" th:field="${ticket.description}" class="form-control" placeholder="Déscription"></textarea>
+                </div>
+                <br>
+                <div>
+                    <label>Quel produit Sage est sujet de votre demande?</label>
+                    <select class="form-select" th:field="${ticket.productType}">
+                        <option id="product" name="product" th:each="product : ${T(ma.emsi.ticketingsystem.enums.Products).values()}" th:value="${product}" th:text="${product.getDisplayName()}"></option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label>Veuillez citer la version de votre produit Sage</label>
+                    <input id="version" name="version" th:field="${ticket.version}" class="form-control" placeholder="Version">
+                </div>
+                <br>
+                <div>
+                    <label>Quel service Sage vous cause t'il un probléme?</label>
+                    <select class="form-select" th:field="${ticket.serviceType}">
+                        <option th:each="service : ${T(ma.emsi.ticketingsystem.enums.Services).values()}" th:value="${service}" th:text="${service.getDisplayName()}"></option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label>Veuillez choisir un niveau de criticité</label>
+                    <select class="form-select" th:field="${ticket.criticality}">
+                        <option th:each="criticite : ${T(ma.emsi.ticketingsystem.enums.Criticality).values()}" th:value="${criticite}" th:text="${criticite.getDisplayName()}"></option>
+                    </select>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Confirmer</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
